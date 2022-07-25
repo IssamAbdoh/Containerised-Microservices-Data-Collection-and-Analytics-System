@@ -12,7 +12,8 @@ The figure below demonstrates the structure of the whole system :
 
 ![](https://github.com/IssamAbdoh/Containerised-Microservices-Data-Collection-and-Analytics-System/blob/main/Pictures/images%20with%20arrows.png)
 
-To better understand what the project exactly , you can refer to the video uploaded on YouTube , the link is in Link.txt file .
+To better understand what the project exactly , you can refer to the video uploaded on YouTube , the link is in "Link.txt" file .
+Or read the attached report "Containerisation Report.pdf" .
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
