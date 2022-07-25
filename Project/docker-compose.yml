@@ -1,0 +1,76 @@
+version: '3'
+services:
+
+  enterdata:
+    container_name: enterdata
+    build: ./EnterDataWebApp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysqldb
+      - mongodb
+      - authentication
+
+  authentication:
+    container_name: authentication
+    build: ./Authentication Service
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mysqldb
+      - mongodb
+
+  mysqldb:
+    container_name: mysqldb
+    image: mysql:8.0
+    restart: unless-stopped
+    volumes:
+      - ./MySql DB/db:/var/lib/mysql
+    environment:
+      - MYSQL_HOST=localhost
+      - MYSQL_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=root
+
+  showresults:
+    container_name: showresults
+    build: ./ShowResultsWebApp
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mysqldb
+      - mongodb
+      - authentication
+
+  analytics:
+    container_name: analytics
+    build: ./Analytics Service
+    ports:
+      - "3003:3003"
+    depends_on:
+      - mysqldb
+      - mongodb
+
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    restart: always
+    volumes:
+      - ./Mongo DB/data:/data/db
+    logging:
+      driver: none
+    command: mongod --quiet --logpath /dev/null
+
+  mongo-express:
+    image: mongo-express:1.0.0-alpha.4
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    depends_on:
+      - mysqldb
+      - mongodb
+    logging:
+      driver: none
+    #command to disable mongo express logging
+    #command: mongod --quiet --logpath /dev/null
